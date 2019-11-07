@@ -6,7 +6,6 @@ const initialState: BoardState = {
 }
 
 export function boardReducer(state = initialState, action: BoardActionTypes): BoardState {
-    console.log(action);
     switch (action.type) {
         case CLICK_CELL:
             let x = action.x;
