@@ -1,0 +1,71 @@
+.cell {
+    box-sizing: border-box;
+    border: solid var(--big-border-width);
+    border-bottom-color: var(--bottom-border-color);
+    border-right-color: var(--bottom-border-color);
+    border-top-color: var(--top-border-color);
+    border-left-color: var(--top-border-color);
+    height: var(--cell-width);
+    width: var(--cell-width);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 75%;
+}
+
+.cell p {
+    font-weight: bolder;
+}
+
+.cell.pushed {
+    border: solid var(--small-border-width);
+    border-color: var(--bottom-border-color);
+}
+
+.cell.pushed.red {
+    background-color: red;
+}
+
+.cell.flag {
+    background-image: url("../icons/flag.png");
+}
+
+.cell.bomb {
+    background-image: url("../icons/bomb.png");
+}
+
+.cell1 {
+    color: blue;
+}
+
+.cell2 {
+    color: green;
+}
+
+.cell3 {
+    color: red;
+}
+
+.cell4 {
+    color: purple;
+}
+
+.cell5 {
+    color: blue;
+}
+
+.cell6 {
+    color: blue;
+}
+
+.cell7 {
+    color: blue;
+}
+
+.cell8 {
+    color: blue;
+}
