@@ -7,7 +7,7 @@ export enum CellState {
     RedBomb,
 }
 
-interface ICellProps {
+export interface ICellProps {
     pushed: boolean,
     state?: CellState,
     value?: number,
