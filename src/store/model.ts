@@ -32,14 +32,18 @@ function arrayContains(set: Array<Position>, elem: Position): boolean {
 export default class Model {
     width: number;
     height: number;
+    bombCount: number;
+
     content: Array<CellContent>;
     pushState: Array<boolean>;
     flags: Array<Position>;
     errorCell?: Position = undefined;
 
-    constructor(width: number, height: number, setup = true) {
+    constructor(width: number, height: number, bombCount: number, setup = true) {
         this.width = width;
         this.height = height;
+        this.bombCount = bombCount;
+
         this.content = new Array(this.width * this.height).fill(0);
         this.pushState = new Array(this.width * this.height).fill(false);
         this.flags = [];
@@ -48,10 +52,17 @@ export default class Model {
         }
     }
 
+    clone(): Model {
+        let newBoard = new Model(this.width, this.height, this.bombCount, false);
+        newBoard.content = [...this.content];
+        newBoard.pushState = [...this.pushState];
+        newBoard.flags = [...this.flags];
+        return newBoard
+    }
+
     randomFill() {
         // place bombs
-        let bombCount = 10;
-        let bombIndices = sample(range(this.content.length), bombCount);
+        let bombIndices = sample(range(this.content.length), this.bombCount);
         for (let i of bombIndices) {
             this.content[i] = "bomb";
         }
@@ -89,14 +100,6 @@ export default class Model {
         return res;
     }
 
-    clone(): Model {
-        let newBoard = new Model(this.width, this.height, false);
-        newBoard.content = [...this.content];
-        newBoard.pushState = [...this.pushState];
-        newBoard.flags = [...this.flags];
-        return newBoard
-    }
-
     isBomb(x: number, y: number): boolean {
         return this.getCellContent(x, y) === "bomb";
     }
@@ -118,9 +121,19 @@ export default class Model {
         if (value && !arrayContains(this.flags, pos)) {
             newBoard.flags.push(pos);
         } else if (!value) {
-            newBoard.flags = this.flags.filter(value => !value.isEqualTo(pos));
+            newBoard.clearFlag([new Position(x, y)]);
         }
         return newBoard;
+    }
+
+    flagCount(): number {
+        return this.flags.length;
+    }
+
+    clearFlag(positions: Array<Position>) {
+        this.flags = this.flags.filter(value => {
+            return !arrayContains(positions, value);
+        });
     }
 
     isFlagged(x: number, y: number): boolean {
@@ -162,7 +175,7 @@ export default class Model {
             newBoard.switchToFailState(x, y);
             return new StepInfo(newBoard, true);
         } else {
-            newBoard.pushState[this.buildIndex(x, y)] = true;
+            let newPushed = [new Position(x, y)];
             if (cellValue === 0) {
                 let openList: Array<Position> = [new Position(x, y)];
                 let closedList: Array<Position> = [];
@@ -172,7 +185,7 @@ export default class Model {
 
                     for (const neighbor of this.buildNeighbors(current.x, current.y)) {
                         if (!arrayContains(closedList, neighbor)) {
-                            newBoard.pushState[this.buildIndex(neighbor.x, neighbor.y)] = true;
+                            newPushed.push(neighbor);
                             if (newBoard.getCellContent(neighbor.x, neighbor.y) === 0) {
                                 openList.push(neighbor)
                             }
@@ -180,6 +193,12 @@ export default class Model {
                     }
                 }
             }
+
+            for (const { x, y } of newPushed) {
+                newBoard.pushState[this.buildIndex(x, y)] = true;
+            }
+            newBoard.clearFlag(newPushed);
+
             return new StepInfo(newBoard);
         }
     }

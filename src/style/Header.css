@@ -40,6 +40,7 @@ header h1 {
 #restart .cell {
     background-color: var(--main-bg-color);
     padding: 0;
+    margin: auto;
 }
 
 #restart .cell:active {

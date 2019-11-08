@@ -3,7 +3,7 @@ import Model from "./model";
 
 const initialStateBuilder = (): BoardState => {
     return {
-        board: new Model(9, 9),
+        board: new Model(9, 9, 10),
         gameState: GameState.playing,
         startDate: 0,
     }
