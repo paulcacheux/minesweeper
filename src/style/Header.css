@@ -1,0 +1,58 @@
+header {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 16px 0;
+    width: 100%;
+    color: #596275;
+    color: #303952;
+    background-color: #f19066;
+}
+
+header h1 {
+    margin-top: 0;
+}
+
+.cmd-box {
+    width: 300px;
+    margin: auto;
+    padding: 0;
+    margin-bottom: 10px;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.cmd-box li {
+    list-style-type: none;
+}
+
+.cmd-box p {
+    margin: 0;
+}
+
+#restart {
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#restart .cell {
+    background-color: var(--main-bg-color);
+    padding: 0;
+}
+
+#restart .cell:active {
+    border: solid var(--small-border-width);
+    border-color: var(--bottom-border-color);
+}
+
+#img-button {
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+}
+
+.score-like {
+    font-size: 1.4em;
+}

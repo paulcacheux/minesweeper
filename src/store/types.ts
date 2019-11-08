@@ -5,6 +5,7 @@ export interface BoardState {
 }
 
 export const CLICK_CELL = "CLICK_CELL";
+export const NEW_GAME = "NEW_GAME";
 
 interface ClickCellAction {
     type: typeof CLICK_CELL;
@@ -12,4 +13,8 @@ interface ClickCellAction {
     y: number;
 }
 
-export type BoardActionTypes = ClickCellAction;
+interface NewGameAction {
+    type: typeof NEW_GAME;
+}
+
+export type BoardActionTypes = ClickCellAction | NewGameAction;

@@ -1,4 +1,4 @@
-import { CLICK_CELL, BoardActionTypes, BoardState } from "./types";
+import { CLICK_CELL, BoardActionTypes, BoardState, NEW_GAME } from "./types";
 import Board from "./board";
 
 const initialState: BoardState = {
@@ -13,6 +13,8 @@ export function boardReducer(state = initialState, action: BoardActionTypes): Bo
             let { board } = state;
             let newBoard = board.pushCell(x, y);
             return { board: newBoard };
+        case NEW_GAME:
+            return initialState;
         default:
             return state;
     }

@@ -12,6 +12,7 @@ export interface ICellProps {
     state?: CellState,
     value?: number,
     onClick?(): void,
+    onRightClick?(): void,
 }
 
 export const Cell: React.FC<ICellProps> = (props) => {
@@ -41,8 +42,15 @@ export const Cell: React.FC<ICellProps> = (props) => {
         valueElement = <p>{props.value}</p>
     }
 
+    const onRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (props.onRightClick) {
+            event.preventDefault();
+            props.onRightClick();
+        }
+    }
+
     return (
-        <div className={classes.join(" ")} onClick={() => props.onClick && props.onClick()}>
+        <div className={classes.join(" ")} onClick={() => props.onClick && props.onClick()} onContextMenu={onRightClick}>
             {valueElement}
         </div>
     )
