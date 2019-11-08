@@ -1,6 +1,5 @@
 import { CLICK_CELL, BoardActionTypes, BoardState, NEW_GAME, FLAG_CELL } from "./types";
 import Model from "./model";
-import { number } from "prop-types";
 
 const initialStateBuilder = (): BoardState => {
     return {
