@@ -1,3 +1,26 @@
-#message {
+footer {
+    box-sizing: border-box;
+    padding: 10px 50px;
+    margin-top: 10px;
+    background-color: var(--header-color);
+    width: 100%;
+    border-radius: 10px;
+    color: var(--header-text-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.message {
     text-transform: uppercase;
+    margin: 0;
+    font-size: 1.5em;
+}
+
+#logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    vertical-align: middle;
 }

@@ -3,9 +3,8 @@ header {
     margin-bottom: 10px;
     padding: 16px 0;
     width: 100%;
-    color: #596275;
-    color: #303952;
-    background-color: #f19066;
+    color: var(--header-text-color);
+    background-color: var(--header-color);
 }
 
 header h1 {

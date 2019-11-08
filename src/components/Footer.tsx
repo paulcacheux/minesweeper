@@ -6,19 +6,24 @@ import "../style/Footer.css"
 export const Footer: React.FC = () => {
     const gameState = useSelector((state: BoardState) => state.gameState);
 
-    let message = undefined;
+    let messages: Array<string>;
     switch (gameState) {
         case GameState.overLose:
-            message = "game over: you lost"
+            messages = ["game over", "you lost"];
             break;
         case GameState.overWin:
-            message = "victory"
+            messages = ["victory"];
             break;
+        default:
+            return null;
     }
 
     return (
         <footer>
-            { message && <p id="message">{message}</p>}
+            <img id="logo" alt="logo" src={process.env.PUBLIC_URL + "/img/logo.png"} />
+            <div>
+                {messages.map((msg: string, index: number) => <p key={index} className="message">{msg}</p>)}
+            </div>
         </footer>
     );
 }

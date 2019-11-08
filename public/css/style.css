@@ -5,6 +5,9 @@
     --cell-width: 40px;
     --big-border-width: 4px;
     --small-border-width: 2px;
+    --banner-color: var(--main-bg-color);
+    --header-color: #f19066;
+    --header-text-color: #303952;
 }
 
 body {
