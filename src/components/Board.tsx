@@ -32,31 +32,40 @@ function extractCellProps(board: BoardModel, x: number, y: number): ICellProps {
     return props;
 }
 
+interface IMacroCellProps {
+    board: BoardModel;
+    x: number;
+    y: number;
+}
+
+const MacroCell: React.FC<IMacroCellProps> = (props: IMacroCellProps) => {
+    const dispatch = useDispatch();
+
+    let cellProps = extractCellProps(props.board, props.x, props.y);
+
+    return (<td>
+        <Cell pushed={cellProps.pushed} value={cellProps.value} state={cellProps.state} onClick={() => {
+            dispatch(clickCell(props.x, props.y))
+        }} onRightClick={() => {
+            console.log("test");
+        }} />
+    </td>)
+}
+
 const Board: React.FC = () => {
     const board = useSelector(boardSelector);
-    const dispatch = useDispatch();
 
     let rows = range(board.height).map(y => {
         return (<tr key={y}>
             {
-                range(board.width).map(x => {
-                    let props = extractCellProps(board, x, y);
-
-                    return (<td key={x}>
-                        <Cell pushed={props.pushed} value={props.value} state={props.state} onClick={() => {
-                            dispatch(clickCell(x, y))
-                        }} onRightClick={() => {
-                            console.log("test");
-                        }} />
-                    </td>)
-                })
+                range(board.width).map(x => <MacroCell key={x} board={board} x={x} y={y} />)
             }
         </tr>);
     })
 
     return (
         <table>
-            <tbody>{ rows }</tbody>
+            <tbody>{rows}</tbody>
         </table>
     );
 }

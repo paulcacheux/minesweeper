@@ -29,10 +29,30 @@ export default class Board {
     }
 
     randomFill() {
+        // place bombs
         let bombCount = 10;
         let bombIndices = sample(range(this.content.length), bombCount);
         for (let i of bombIndices) {
             this.content[i] = "bomb";
+        }
+
+        // count near bombs for each cells
+        let offsets = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]];
+
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                if (!this.isBomb(x, y)) {
+                    let counter = 0;
+                    for (const [dx, dy] of offsets) {
+                        let nx = x + dx;
+                        let ny = y + dy;
+                        if (this.checkInBounds(nx, ny) && this.isBomb(nx, ny)) {
+                            counter += 1;
+                        }
+                    }
+                    this.content[y * this.width + x] = counter;
+                }
+            }
         }
     }
 
@@ -41,6 +61,10 @@ export default class Board {
         newBoard.content = [...this.content];
         newBoard.pushState = [...this.pushState];
         return newBoard
+    }
+
+    isBomb(x: number, y: number): boolean {
+        return this.getCellContent(x, y) === "bomb";
     }
 
     getCellContent(x: number, y: number): CellContent {
