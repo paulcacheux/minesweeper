@@ -1,9 +1,14 @@
 import Model from "./model";
 
+export enum GameState {
+    playing,
+    overWin,
+    overLose,
+}
+
 export interface BoardState {
-    isOver: boolean;
+    gameState: GameState;
     board: Model;
-    message?: string;
 }
 
 export const CLICK_CELL = "CLICK_CELL";

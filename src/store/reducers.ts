@@ -1,10 +1,10 @@
-import { CLICK_CELL, BoardActionTypes, BoardState, NEW_GAME, FLAG_CELL } from "./types";
+import { CLICK_CELL, BoardActionTypes, BoardState, NEW_GAME, FLAG_CELL, GameState } from "./types";
 import Model from "./model";
 
 const initialStateBuilder = (): BoardState => {
     return {
         board: new Model(9, 9),
-        isOver: false,
+        gameState: GameState.playing
     }
 }
 
@@ -14,11 +14,11 @@ function clickCellInner(state: BoardState, x: number, y: number): BoardState {
     let { board } = state;
     let stepInfos = board.pushCell(x, y);
     if (stepInfos.isFail) {
-        return { board: stepInfos.model, isOver: true, message: "game over: you lost" };
+        return { board: stepInfos.model, gameState: GameState.overLose };
     } else if (stepInfos.model.isWin()) {
-        return { board: stepInfos.model, isOver: true, message: "victory" };
+        return { board: stepInfos.model, gameState: GameState.overWin };
     } else {
-        return { board: stepInfos.model, isOver: false, message: undefined };
+        return { board: stepInfos.model, gameState: GameState.playing };
     }
 }
 
@@ -35,7 +35,7 @@ function flagCellInner(state: BoardState, x: number, y: number): BoardState {
 export function boardReducer(state = initialState, action: BoardActionTypes): BoardState {
     switch (action.type) {
         case CLICK_CELL:
-            if (!state.isOver) {
+            if (state.gameState === GameState.playing) {
                 let x = action.x;
                 let y = action.y;
                 return clickCellInner(state, x, y);
@@ -43,7 +43,7 @@ export function boardReducer(state = initialState, action: BoardActionTypes): Bo
                 return state;
             }
         case FLAG_CELL:
-            if (!state.isOver) {
+            if (state.gameState === GameState.playing) {
                 let x = action.x;
                 let y = action.y;
                 return flagCellInner(state, x, y);
