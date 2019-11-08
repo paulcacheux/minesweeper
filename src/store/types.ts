@@ -9,6 +9,7 @@ export enum GameState {
 export interface BoardState {
     gameState: GameState;
     board: Model;
+    startDate?: Date | number;
 }
 
 export const CLICK_CELL = "CLICK_CELL";

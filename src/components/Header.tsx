@@ -3,6 +3,7 @@ import "../style/Header.css"
 import { useDispatch, useSelector } from "react-redux";
 import { newGame } from "../store/actions";
 import { BoardState, GameState } from "../store/types";
+import Timer from "./Timer";
 
 export const Header: React.FC = () => {
     const dispatch = useDispatch();
@@ -27,7 +28,7 @@ export const Header: React.FC = () => {
             <ul className="cmd-box">
                 <li>
                     <p>Time:</p>
-                    <p className="score-like">0000</p>
+                    <Timer />
                 </li>
                 <li id="restart">
                     <button className="cell" onClick={() => dispatch(newGame())}>
@@ -35,8 +36,8 @@ export const Header: React.FC = () => {
                     </button>
                 </li>
                 <li>
-                    <p>Score:</p>
-                    <p className="score-like">0000</p>
+                    <p>Mines:</p>
+                    <p className="score-like">10</p>
                 </li>
             </ul>
         </header>

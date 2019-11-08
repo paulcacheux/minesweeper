@@ -4,7 +4,8 @@ import Model from "./model";
 const initialStateBuilder = (): BoardState => {
     return {
         board: new Model(9, 9),
-        gameState: GameState.playing
+        gameState: GameState.playing,
+        startDate: 0,
     }
 }
 
@@ -18,7 +19,7 @@ function clickCellInner(state: BoardState, x: number, y: number): BoardState {
     } else if (stepInfos.model.isWin()) {
         return { board: stepInfos.model, gameState: GameState.overWin };
     } else {
-        return { board: stepInfos.model, gameState: GameState.playing };
+        return { board: stepInfos.model, gameState: GameState.playing, startDate: state.startDate };
     }
 }
 
@@ -32,13 +33,21 @@ function flagCellInner(state: BoardState, x: number, y: number): BoardState {
     }
 }
 
+function launchTimer(state: BoardState): BoardState {
+    if (state.gameState === GameState.playing && (state.startDate === undefined || typeof state.startDate === "number")) {
+        return {...state, startDate: new Date()};
+    } else {
+        return state;
+    }
+}
+
 export function boardReducer(state = initialState, action: BoardActionTypes): BoardState {
     switch (action.type) {
         case CLICK_CELL:
             if (state.gameState === GameState.playing) {
                 let x = action.x;
                 let y = action.y;
-                return clickCellInner(state, x, y);
+                return launchTimer(clickCellInner(state, x, y));
             } else {
                 return state;
             }
@@ -46,7 +55,7 @@ export function boardReducer(state = initialState, action: BoardActionTypes): Bo
             if (state.gameState === GameState.playing) {
                 let x = action.x;
                 let y = action.y;
-                return flagCellInner(state, x, y);
+                return launchTimer(flagCellInner(state, x, y));
             } else {
                 return state;
             }
