@@ -4,12 +4,12 @@ import "../style/Board.css";
 import { useSelector, useDispatch } from "react-redux";
 import { BoardState } from "../store/types";
 import { range } from "../utils";
-import BoardModel from "../store/board";
-import { clickCell } from "../store/actions";
+import Model, { Position } from "../store/model";
+import { clickCell, flagCell } from "../store/actions";
 
 const boardSelector = (state: BoardState) => state.board;
 
-function extractCellProps(board: BoardModel, x: number, y: number): ICellProps {
+function extractCellProps(board: Model, x: number, y: number): ICellProps {
     let props: ICellProps = {
         pushed: false,
         value: undefined,
@@ -25,7 +25,15 @@ function extractCellProps(board: BoardModel, x: number, y: number): ICellProps {
                 props.value = boardValue;
             }
         } else {
-            props.state = CellState.Bomb;
+            if (board.errorCell && board.errorCell.isEqualTo(new Position(x, y))) {
+                props.state = CellState.RedBomb;
+            } else {
+                props.state = CellState.Bomb;
+            }
+        }
+    } else {
+        if (board.isFlagged(x, y)) {
+            props.state = CellState.Flag;
         }
     }
 
@@ -33,7 +41,7 @@ function extractCellProps(board: BoardModel, x: number, y: number): ICellProps {
 }
 
 interface IMacroCellProps {
-    board: BoardModel;
+    board: Model;
     x: number;
     y: number;
 }
@@ -45,9 +53,9 @@ const MacroCell: React.FC<IMacroCellProps> = (props: IMacroCellProps) => {
 
     return (<td>
         <Cell pushed={cellProps.pushed} value={cellProps.value} state={cellProps.state} onClick={() => {
-            dispatch(clickCell(props.x, props.y))
+            dispatch(clickCell(props.x, props.y));
         }} onRightClick={() => {
-            console.log("test");
+            dispatch(flagCell(props.x, props.y));
         }} />
     </td>)
 }

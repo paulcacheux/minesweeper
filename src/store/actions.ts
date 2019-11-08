@@ -1,8 +1,16 @@
-import { CLICK_CELL, NEW_GAME } from "./types";
+import { CLICK_CELL, NEW_GAME, FLAG_CELL } from "./types";
 
 export function clickCell(x: number, y: number) {
     return {
         type: CLICK_CELL,
+        x: x,
+        y: y,
+    }
+}
+
+export function flagCell(x: number, y: number) {
+    return {
+        type: FLAG_CELL,
         x: x,
         y: y,
     }

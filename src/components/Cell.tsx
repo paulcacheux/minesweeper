@@ -40,6 +40,7 @@ export const Cell: React.FC<ICellProps> = (props) => {
     let valueElement: JSX.Element | null = null;
     if (props.value !== undefined) {
         valueElement = <p>{props.value}</p>
+        classes.push(`cell${props.value}`);
     }
 
     const onRightClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
