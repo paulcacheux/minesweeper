@@ -1,9 +1,8 @@
 header {
     margin: 0;
-    margin-bottom: 10px;
     padding: 16px 0;
     width: 100%;
-    color: var(--header-text-color);
+    color: var(--text-color);
     background-color: var(--header-color);
 }
 

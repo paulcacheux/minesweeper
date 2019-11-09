@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { newGame } from "../store/actions";
 import { BoardState, GameState } from "../store/types";
 import Timer from "./Timer";
+import { AppState } from "../store/reducers";
 
-function headerSelector(state: BoardState) {
-    let minesLeft = state.board.bombCount - state.board.flagCount();
-    return { gameState: state.gameState, minesLeft };
+function headerSelector(state: AppState) {
+    const board = state.game.board;
+    let minesLeft = board.bombCount - board.flagCount();
+    return { gameState: state.game.gameState, minesLeft };
 }
 
 export const Header: React.FC = () => {

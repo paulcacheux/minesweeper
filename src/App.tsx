@@ -1,11 +1,11 @@
 import React from "react";
 import Header from "./components/Header";
 import { createStore } from "redux";
-import { boardReducer } from "./store/reducers";
+import rootReducer from "./store/reducers";
 import { Provider } from "react-redux";
 import Main from "./components/Main";
 
-const store = createStore(boardReducer);
+const store = createStore(rootReducer);
 
 const App: React.FC = () => {
   return (

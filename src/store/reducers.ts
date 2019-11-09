@@ -1,5 +1,6 @@
-import { CLICK_CELL, BoardActionTypes, BoardState, NEW_GAME, FLAG_CELL, GameState } from "./types";
+import { CLICK_CELL, BoardActionTypes, BoardState, NEW_GAME, FLAG_CELL, GameState, ToolActionTypes, ToolState, CHANGE_LEFT_CLICK_TOOL } from "./types";
 import Model from "./model";
+import { combineReducers } from "redux";
 
 const parseParam = (params: URLSearchParams, query: string, defaultValue: number) => {
     const strValue = params.get(query);
@@ -85,3 +86,17 @@ export function boardReducer(state = initialState, action: BoardActionTypes): Bo
             return state;
     }
 }
+
+export function toolReducer(state: ToolState = { leftClickFlag: false }, action: ToolActionTypes): ToolState {
+    switch (action.type) {
+        case CHANGE_LEFT_CLICK_TOOL:
+            return { leftClickFlag: action.leftClickFlag };
+        default:
+            return state;
+    }
+}
+
+const rootReducer = combineReducers({ game: boardReducer, tools: toolReducer });
+export type AppState = ReturnType<typeof rootReducer>;
+
+export default rootReducer;

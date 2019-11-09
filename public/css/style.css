@@ -7,7 +7,7 @@
     --small-border-width: 2px;
     --banner-color: var(--main-bg-color);
     --header-color: #f19066;
-    --header-text-color: #303952;
+    --text-color: #303952;
 }
 
 body {
