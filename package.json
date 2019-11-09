@@ -2,7 +2,7 @@
   "name": "minesweeper",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://paulcacheux.github.io/minesweeper",
+  "homepage": "https://paulcacheux.github.io/minesweeper",
   "dependencies": {
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

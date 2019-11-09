@@ -1,9 +1,28 @@
 import { CLICK_CELL, BoardActionTypes, BoardState, NEW_GAME, FLAG_CELL, GameState } from "./types";
 import Model from "./model";
 
+const parseParam = (params: URLSearchParams, query: string, defaultValue: number) => {
+    const strValue = params.get(query);
+    if (!strValue) {
+        return defaultValue;
+    }
+    const value = parseInt(strValue, 10);
+    if (Number.isNaN(value)) {
+        return defaultValue;
+    }
+    return value;
+}
+
 const initialStateBuilder = (): BoardState => {
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+
+    const width = parseParam(params, "width", 9);
+    const height = parseParam(params, "height", 9);
+    const bombs = parseParam(params, "bombs", 10);
+
     return {
-        board: new Model(12, 9, 10),
+        board: new Model(width, height, bombs),
         gameState: GameState.playing,
         startDate: 0,
     }
@@ -36,7 +55,7 @@ function flagCellInner(state: BoardState, x: number, y: number): BoardState {
 
 function launchTimer(state: BoardState): BoardState {
     if (state.gameState === GameState.playing && (state.startDate === undefined || typeof state.startDate === "number")) {
-        return {...state, startDate: new Date()};
+        return { ...state, startDate: new Date() };
     } else {
         return state;
     }
