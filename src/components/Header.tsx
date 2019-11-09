@@ -2,7 +2,7 @@ import React from "react";
 import "../style/Header.css"
 import { useDispatch, useSelector } from "react-redux";
 import { newGame } from "../store/actions";
-import { BoardState, GameState } from "../store/types";
+import { GameState } from "../store/types";
 import Timer from "./Timer";
 import { AppState } from "../store/reducers";
 

@@ -1,4 +1,4 @@
-import { CLICK_CELL, NEW_GAME, FLAG_CELL } from "./types";
+import { CLICK_CELL, NEW_GAME, FLAG_CELL, CHANGE_LEFT_CLICK_TOOL } from "./types";
 
 export function clickCell(x: number, y: number) {
     return {
@@ -19,5 +19,12 @@ export function flagCell(x: number, y: number) {
 export function newGame() {
     return {
         type: NEW_GAME,
+    }
+}
+
+export function changeTool(leftClickFlag: boolean) {
+    return {
+        type: CHANGE_LEFT_CLICK_TOOL,
+        leftClickFlag: leftClickFlag,
     }
 }

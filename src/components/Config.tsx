@@ -1,5 +1,8 @@
 import React from "react";
 import "../style/Config.css";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTool } from "../store/actions";
+import { AppState } from "../store/reducers";
 
 interface IBoardConfigProps {
     title: string;
@@ -16,21 +19,30 @@ const BoardConfigLink: React.FC<IBoardConfigProps> = (props: IBoardConfigProps) 
 
 interface IClickConfigProps {
     title: string;
-    active?: boolean;
+    active: boolean;
+    targetConfig: boolean;
 }
 
-const ClickConfigLink: React.FC<IClickConfigProps> = (props: IClickConfigProps) => {
+const ToolConfigButton: React.FC<IClickConfigProps> = (props: IClickConfigProps) => {
+    const dispatch = useDispatch();
+
     let className = "btn";
     if (props.active) {
         className += " active";
     }
 
+    const handler = () => {
+        dispatch(changeTool(props.targetConfig));
+    }
+
     return (
-        <p className={className}>{props.title}</p>
+        <p className={className} onClick={handler}>{props.title}</p>
     );
 }
 
 const Config: React.FC = () => {
+    const leftClickFlagCurrent = useSelector((state: AppState) => state.tools.leftClickFlag);
+
     return (
         <div id="config-box">
             <div>
@@ -44,8 +56,8 @@ const Config: React.FC = () => {
             <div>
                 <p className="config-label">Touch mode</p>
                 <div className="btn-group">
-                    <ClickConfigLink title="push" active />
-                    <ClickConfigLink title="flag" />
+                    <ToolConfigButton title="push" targetConfig={false} active={!leftClickFlagCurrent} />
+                    <ToolConfigButton title="flag" targetConfig={true} active={leftClickFlagCurrent} />
                 </div>
             </div>
         </div>

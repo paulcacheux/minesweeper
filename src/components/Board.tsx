@@ -2,7 +2,6 @@ import React from "react";
 import { Cell, CellState, ICellProps } from "./Cell";
 import "../style/Board.css";
 import { useSelector, useDispatch } from "react-redux";
-import { BoardState } from "../store/types";
 import { range } from "../utils";
 import Model, { Position } from "../store/model";
 import { clickCell, flagCell } from "../store/actions";
@@ -49,12 +48,17 @@ interface IMacroCellProps {
 
 const MacroCell: React.FC<IMacroCellProps> = (props: IMacroCellProps) => {
     const dispatch = useDispatch();
+    const leftClickFlag = useSelector((state: AppState) => state.tools.leftClickFlag);
 
     let cellProps = extractCellProps(props.board, props.x, props.y);
 
     return (<td>
         <Cell pushed={cellProps.pushed} value={cellProps.value} state={cellProps.state} onClick={() => {
-            dispatch(clickCell(props.x, props.y));
+            if (leftClickFlag) {
+                dispatch(flagCell(props.x, props.y));
+            } else {
+                dispatch(clickCell(props.x, props.y));
+            }
         }} onRightClick={() => {
             dispatch(flagCell(props.x, props.y));
         }} />
