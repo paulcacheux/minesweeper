@@ -114,16 +114,14 @@ export default class Model {
         return this.pushState[this.buildIndex(x, y)];
     }
 
-    setFlag(x: number, y: number, value: boolean): Model {
+    setFlag(x: number, y: number, value: boolean) {
         this.assertInBounds(x, y);
         let pos = new Position(x, y);
-        let newBoard = this.clone();
         if (value && !arrayContains(this.flags, pos)) {
-            newBoard.flags.push(pos);
+            this.flags.push(pos);
         } else if (!value) {
-            newBoard.clearFlag([new Position(x, y)]);
+            this.clearFlag([new Position(x, y)]);
         }
-        return newBoard;
     }
 
     flagCount(): number {
@@ -163,17 +161,16 @@ export default class Model {
         this.errorCell = new Position(x, y);
     }
 
-    pushCell(x: number, y: number): StepInfo {
+    pushCell(x: number, y: number): boolean {
         this.assertInBounds(x, y);
         if (this.getPushState(x, y)) {
-            return new StepInfo(this);
+            return false;
         }
 
-        let newBoard = this.clone();
-        let cellValue = newBoard.getCellContent(x, y);
+        let cellValue = this.getCellContent(x, y);
         if (cellValue === "bomb") {
-            newBoard.switchToFailState(x, y);
-            return new StepInfo(newBoard, true);
+            this.switchToFailState(x, y);
+            return true;
         } else {
             let newPushed = [new Position(x, y)];
             if (cellValue === 0) {
@@ -186,7 +183,7 @@ export default class Model {
                     for (const neighbor of this.buildNeighbors(current.x, current.y)) {
                         if (!arrayContains(closedList, neighbor)) {
                             newPushed.push(neighbor);
-                            if (newBoard.getCellContent(neighbor.x, neighbor.y) === 0) {
+                            if (this.getCellContent(neighbor.x, neighbor.y) === 0) {
                                 openList.push(neighbor)
                             }
                         }
@@ -195,11 +192,10 @@ export default class Model {
             }
 
             for (const { x, y } of newPushed) {
-                newBoard.pushState[this.buildIndex(x, y)] = true;
+                this.pushState[this.buildIndex(x, y)] = true;
             }
-            newBoard.clearFlag(newPushed);
-
-            return new StepInfo(newBoard);
+            this.clearFlag(newPushed);
+            return false;
         }
     }
 

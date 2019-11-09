@@ -18,7 +18,7 @@ header h1 {
     margin-bottom: 10px;
     display: flex;
 
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -34,6 +34,9 @@ header h1 {
     padding: 0;
     margin-left: auto;
     margin-right: auto;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
 
 #restart .cell {
@@ -45,6 +48,10 @@ header h1 {
 #restart .cell:active {
     border: solid var(--small-border-width);
     border-color: var(--bottom-border-color);
+}
+
+#restart button {
+    outline: 0;
 }
 
 #img-button {

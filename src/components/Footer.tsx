@@ -7,12 +7,15 @@ export const Footer: React.FC = () => {
     const gameState = useSelector((state: BoardState) => state.gameState);
 
     let messages: Array<string>;
+    let logoUrl: string;
     switch (gameState) {
         case GameState.overLose:
             messages = ["game over", "you lost"];
+            logoUrl = "logo_loose.png";
             break;
         case GameState.overWin:
             messages = ["victory"];
+            logoUrl = "logo.png";
             break;
         default:
             return null;
@@ -20,7 +23,7 @@ export const Footer: React.FC = () => {
 
     return (
         <footer>
-            <img id="logo" alt="logo" src={process.env.PUBLIC_URL + "/img/logo.png"} />
+            <img id="logo" alt="logo" src={process.env.PUBLIC_URL + "/img/" + logoUrl} />
             <div>
                 {messages.map((msg: string, index: number) => <p key={index} className="message">{msg}</p>)}
             </div>

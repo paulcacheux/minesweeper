@@ -3,7 +3,7 @@ import Model from "./model";
 
 const initialStateBuilder = (): BoardState => {
     return {
-        board: new Model(9, 9, 10),
+        board: new Model(12, 9, 10),
         gameState: GameState.playing,
         startDate: 0,
     }
@@ -12,14 +12,14 @@ const initialStateBuilder = (): BoardState => {
 const initialState: BoardState = initialStateBuilder();
 
 function clickCellInner(state: BoardState, x: number, y: number): BoardState {
-    let { board } = state;
-    let stepInfos = board.pushCell(x, y);
-    if (stepInfos.isFail) {
-        return { board: stepInfos.model, gameState: GameState.overLose };
-    } else if (stepInfos.model.isWin()) {
-        return { board: stepInfos.model, gameState: GameState.overWin };
+    let board = state.board.clone();
+    let isFail = board.pushCell(x, y);
+    if (isFail) {
+        return { board, gameState: GameState.overLose };
+    } else if (board.isWin()) {
+        return { board, gameState: GameState.overWin };
     } else {
-        return { board: stepInfos.model, gameState: GameState.playing, startDate: state.startDate };
+        return { board, gameState: GameState.playing, startDate: state.startDate };
     }
 }
 
@@ -27,9 +27,10 @@ function flagCellInner(state: BoardState, x: number, y: number): BoardState {
     if (state.board.getPushState(x, y)) {
         return state;
     } else {
-        let previous = state.board.isFlagged(x, y);
-        let newBoard = state.board.setFlag(x, y, !previous);
-        return { ...state, board: newBoard };
+        let board = state.board.clone();
+        let previous = board.isFlagged(x, y);
+        board.setFlag(x, y, !previous);
+        return { ...state, board: board };
     }
 }
 
