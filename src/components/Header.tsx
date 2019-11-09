@@ -37,7 +37,7 @@ export const Header: React.FC = () => {
                 </li>
                 <li id="restart">
                     <button className="cell" title="New Game" onClick={() => dispatch(newGame())}>
-                        <img id="img-button" alt="New Game" src={ process.env.PUBLIC_URL + "/img/" + image_src } />
+                        <img id="img-button" alt="New Game" src={process.env.PUBLIC_URL + "/img/" + image_src} />
                     </button>
                 </li>
                 <li>
