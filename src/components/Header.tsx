@@ -12,7 +12,7 @@ function headerSelector(state: AppState) {
     return { gameState: state.game.gameState, minesLeft };
 }
 
-export const Header: React.FC = () => {
+export const Header: React.FC = (props) => {
     const dispatch = useDispatch();
     const { gameState, minesLeft } = useSelector(headerSelector);
 
@@ -47,6 +47,7 @@ export const Header: React.FC = () => {
                     <p className="score-like">{minesLeft}</p>
                 </li>
             </ul>
+            {props.children}
         </header>
     );
 }

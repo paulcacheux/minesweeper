@@ -2,7 +2,7 @@
     --main-bg-color: rgb(192, 192, 192);
     --top-border-color: white;
     --bottom-border-color: rgb(128, 128, 128);
-    --cell-width: 40px;
+    --cell-width: 50px;
     --big-border-width: 4px;
     --small-border-width: 2px;
     --banner-color: var(--main-bg-color);

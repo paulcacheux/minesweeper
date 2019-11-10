@@ -1,8 +1,13 @@
-#config-box {
-    display: inline-block;
+.config {
+    display: flex;
+    justify-content: center;
+}
+
+.config-box {
     padding: 10px;
-    margin: 10px auto;
-    border: 1px solid green;
+    margin: 5px;
+    border: 1px solid #596275;
+    border-radius: 3px;
 }
 
 .config-label {
@@ -31,10 +36,17 @@
     line-height: 1.5;
     border-radius: .25rem;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    color: var(--text-color);
-    /*background-color: var(--main-bg-color);*/
-    border-color: var(--header-color);
     margin: 0;
+}
+
+.btn.tool {
+    color: var(--text-color);
+    border-color: var(--header-color);
+}
+
+.btn.select {
+    color: var(--text-color);
+    border-color: grey;
 }
 
 .btn-group > .btn:not(:last-child):not(.dropdown-toggle) {
@@ -53,6 +65,6 @@
 
 .btn:hover, .btn.active {
     color: #fff;
-    background-color: orange;
-    border-color: orange;
+    background-color: var(--header-color);
+    border-color: var(--header-color);
 }

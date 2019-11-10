@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { BoardState, GameState } from "../store/types";
+import { GameState } from "../store/types";
 import "../style/Footer.css"
+import { AppState } from "../store/reducers";
 
 export const Footer: React.FC = () => {
-    const gameState = useSelector((state: BoardState) => state.gameState);
+    const gameState = useSelector((state: AppState) => state.game.gameState);
 
     let messages: Array<string>;
     let logoUrl: string;

@@ -13,7 +13,7 @@ interface IBoardConfigProps {
 
 const BoardConfigLink: React.FC<IBoardConfigProps> = (props: IBoardConfigProps) => {
     return (
-        <a className="btn" href={`?width=${props.width}&height=${props.height}&bombs=${props.bombs}`}>{props.title}</a>
+        <a className="btn select" href={`?width=${props.width}&height=${props.height}&bombs=${props.bombs}`}>{props.title}</a>
     );
 }
 
@@ -26,7 +26,7 @@ interface IClickConfigProps {
 const ToolConfigButton: React.FC<IClickConfigProps> = (props: IClickConfigProps) => {
     const dispatch = useDispatch();
 
-    let className = "btn";
+    let className = "btn tool";
     if (props.active) {
         className += " active";
     }
@@ -44,22 +44,26 @@ const Config: React.FC = () => {
     const leftClickFlagCurrent = useSelector((state: AppState) => state.tools.leftClickFlag);
 
     return (
-        <div id="config-box">
-            <div>
-                <p className="config-label">Difficulty</p>
-                <div className="btn-group">
-                    <BoardConfigLink title="easy" width={9} height={9} bombs={10} />
-                    <BoardConfigLink title="medium" width={16} height={16} bombs={40} />
-                    <BoardConfigLink title="hard" width={30} height={16} bombs={99} />
+        <div className="config">
+            <div className="config-box">
+                <div>
+                    <p className="config-label">New game</p>
+                    <div className="btn-group">
+                        <BoardConfigLink title="easy" width={9} height={9} bombs={10} />
+                        <BoardConfigLink title="medium" width={16} height={16} bombs={40} />
+                        <BoardConfigLink title="hard" width={30} height={16} bombs={99} />
+                    </div>
                 </div>
             </div>
-            <div>
-                <p className="config-label">Touch mode</p>
-                <div className="btn-group">
-                    <ToolConfigButton title="push" targetConfig={false} active={!leftClickFlagCurrent} />
-                    <ToolConfigButton title="flag" targetConfig={true} active={leftClickFlagCurrent} />
+            <div className="config-box">
+                <div>
+                    <p className="config-label">Touch mode</p>
+                    <div className="btn-group">
+                        <ToolConfigButton title="open" targetConfig={false} active={!leftClickFlagCurrent} />
+                        <ToolConfigButton title="flag" targetConfig={true} active={leftClickFlagCurrent} />
+                    </div>
                 </div>
-            </div>
+            </div >
         </div>
     );
 }
