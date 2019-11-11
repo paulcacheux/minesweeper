@@ -9,7 +9,7 @@ import { AppState } from "../store/reducers";
 
 const boardSelector = (state: AppState) => state.game.board;
 
-function extractCellProps(board: Model, x: number, y: number): ICellProps {
+const extractCellProps = (board: Model, x: number, y: number): ICellProps => {
     let props: ICellProps = {
         pushed: false,
         value: undefined,

@@ -6,7 +6,7 @@ import { GameState } from "../store/types";
 import Timer from "./Timer";
 import { AppState } from "../store/reducers";
 
-function headerSelector(state: AppState) {
+const headerSelector = (state: AppState) => {
     const board = state.game.board;
     let minesLeft = board.bombCount - board.flagCount();
     return { gameState: state.game.gameState, minesLeft };
