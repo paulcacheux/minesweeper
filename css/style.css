@@ -1,0 +1,18 @@
+:root {
+    --main-bg-color: rgb(192, 192, 192);
+    --top-border-color: white;
+    --bottom-border-color: rgb(128, 128, 128);
+    --cell-width: 50px;
+    --big-border-width: 4px;
+    --small-border-width: 2px;
+    --banner-color: var(--main-bg-color);
+    --header-color: #f19066;
+    --text-color: #303952;
+}
+
+body {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+}
